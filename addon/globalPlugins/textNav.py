@@ -6,20 +6,22 @@
 import addonHandler
 import api
 import bisect
+import config
 import controlTypes
 import ctypes
 import globalPluginHandler
+import gui
 import NVDAHelper
 from NVDAObjects.window import winword
 import operator
 import re 
+from scriptHandler import script
 import speech
 import struct
 import textInfos
 import tones
 import ui
-
-addonHandler.initTranslation()
+import wx
 
 f = open("C:\\users\\tony\\dropbox\\work\\1.txt", "w")
 def log(s):
@@ -29,6 +31,79 @@ def log(s):
 def myAssert(condition):
     if not condition:
         raise RuntimeError("Assertion failed")
+
+def createMenu():
+    def _popupMenu(evt):
+        gui.mainFrame._popupSettingsDialog(SettingsDialog)
+    prefsMenuItem  = gui.mainFrame.sysTrayIcon.preferencesMenu.Append(wx.ID_ANY, _("TextNav..."))
+    gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, _popupMenu, prefsMenuItem)
+
+def initConfiguration():
+    confspec = {
+        "crackleVolume" : "integer( default=25, min=0, max=100)",
+        "noNextTextChimeVolume" : "integer( default=50, min=0, max=100)",
+        "noNextTextMessage" : "boolean( default=False)",
+        "speakFormatted" : "boolean( default=True)",
+    }
+    config.conf.spec["textnav"] = confspec
+    
+def getConfig(key):
+    value = config.conf["textnav"][key]
+    return value
+    
+addonHandler.initTranslation()
+initConfiguration()
+createMenu()
+
+
+class SettingsDialog(gui.SettingsDialog):
+    # Translators: Title for the settings dialog
+    title = _("TextNav settings")
+
+    def __init__(self, *args, **kwargs):
+        super(SettingsDialog, self).__init__(*args, **kwargs)
+
+    def makeSettings(self, settingsSizer):
+        sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+      # crackleVolumeSlider
+        sizer=wx.BoxSizer(wx.HORIZONTAL)
+        # Translators: volume of crackling slider
+        label=wx.StaticText(self,wx.ID_ANY,label=_("Crackling volume"))
+        slider=wx.Slider(self, wx.NewId(), minValue=0,maxValue=100)
+        slider.SetValue(getConfig("crackleVolume"))
+        sizer.Add(label)
+        sizer.Add(slider)
+        settingsSizer.Add(sizer)
+        self.crackleVolumeSlider = slider
+
+      # noNextTextChimeVolumeSlider
+        sizer=wx.BoxSizer(wx.HORIZONTAL)
+        # Translators: End of document chime volume
+        label=wx.StaticText(self,wx.ID_ANY,label=_("Volume of chime when no more sentences available"))
+        slider=wx.Slider(self, wx.NewId(), minValue=0,maxValue=100)
+        slider.SetValue(getConfig("noNextTextChimeVolume"))
+        sizer.Add(label)
+        sizer.Add(slider)
+        settingsSizer.Add(sizer)
+        self.noNextTextChimeVolumeSlider = slider
+        
+      # Checkboxes
+        # Translators: Checkbox that controls spoken message when no next or previous text paragraph is available in the document
+        label = _("Speak message when no next paragraph containing text available in the document")
+        self.noNextTextMessageCheckbox = sHelper.addItem(wx.CheckBox(self, label=label))
+        self.noNextTextMessageCheckbox.Value = getConfig("noNextTextMessage")
+        # Translators: speak formatted text checkbox
+        label = _("Speak formatted text")
+        self.speakFormattedCheckbox = sHelper.addItem(wx.CheckBox(self, label=label))
+        self.speakFormattedCheckbox.Value = getConfig("speakFormatted")
+    def onOk(self, evt):
+        config.conf["textnav"]["crackleVolume"] = self.crackleVolumeSlider.Value
+        config.conf["textnav"]["noNextTextChimeVolume"] = self.noNextTextChimeVolumeSlider.Value
+        config.conf["textnav"]["noNextTextMessage"] = self.noNextTextMessageCheckbox.Value
+        config.conf["textnav"]["speakFormatted"] = self.speakFormattedCheckbox.Value
+        super(SettingsDialog, self).onOk(evt)
+
+
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     scriptCategory = _("TextNav")
@@ -63,16 +138,21 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         # Sometimes the last position in the text will be matched twice, so filter duplicates.
         result = sorted(list(set(result)))
         return result
+
+    @script(description='Move to next  paragraph containing text.', gestures=['kb:Alt+Shift+DownArrow'])
     def script_nextText(self, gesture):
-        """Move to next paragraph that contains text."""
-        self.moveToText(gesture, 1)
+        # Translators: error message when no next paragraph with text is available in the document
+        errorMsg = _("No next paragraph with text")
+        self.moveToText(gesture, 1, errorMsg)
 
+    @script(description='Move to previous  paragraph containing text.', gestures=['kb:Alt+Shift+UpArrow'])
     def script_previousText(self, gesture):
-        """Move to previous paragraph that contains text."""
-        self.moveToText(gesture, -1)
+        # Translators: error message when no previous paragraph with text is available in the document
+        errorMsg = _("No previous paragraph with text")
+        self.moveToText(gesture, -1, errorMsg)
 
 
-    def moveToText(self, gesture, increment):
+    def moveToText(self, gesture, increment, errorMsg="Error"):
         focus = api.getFocusObject()
         if hasattr(focus, "treeInterceptor") and hasattr(focus.treeInterceptor, "makeTextInfo"):
             focus = focus.treeInterceptor
@@ -81,7 +161,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         while True:
             result =textInfo.move(textInfos.UNIT_PARAGRAPH, increment)
             if result == 0:
-                self.fancyBeep("HF", 100, 50, 50)
+                volume = getConfig("noNextTextChimeVolume")
+                self.fancyBeep("HF", 100, volume, volume)
+                if getConfig("noNextTextMessage"):
+                    ui.message(errorMsg)
                 return
             distance += 1
             textInfo.expand(textInfos.UNIT_PARAGRAPH)
@@ -93,10 +176,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             text2 = text + " FinalWord"
             boundaries = self.splitParagraphIntoSentences(text2)
             if len(boundaries) >= 3:
-                textInfo.collapse()
+                #textInfo.collapse()
                 textInfo.updateCaret()
-                self.simpleCrackle(distance)
-                ui.message(text)
+                self.simpleCrackle(distance, getConfig("crackleVolume"))
+                if getConfig("speakFormatted"):
+                    speech.speakTextInfo(textInfo)
+                else:
+                    speech.speakText(text)
                 break
 
     NOTES = "A,B,H,C,C#,D,D#,E,F,F#,G,G#".split(",")
@@ -156,27 +242,23 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     MAX_CRACKLE_LEN = 400 # millis
     MAX_BEEP_COUNT = MAX_CRACKLE_LEN / (BEEP_LEN + PAUSE_LEN)
         
-    def fancyCrackle(self, levels):
+    def fancyCrackle(self, levels, volume):
         levels = self.uniformSample(levels, self.MAX_BEEP_COUNT )
         beepLen = self.BEEP_LEN 
         pauseLen = self.PAUSE_LEN
         pauseBufSize = NVDAHelper.generateBeep(None,self.BASE_FREQ,pauseLen,0, 0)
-        beepBufSizes = [NVDAHelper.generateBeep(None,self.getPitch(l), beepLen, 50, 50) for l in levels]
+        beepBufSizes = [NVDAHelper.generateBeep(None,self.getPitch(l), beepLen, volume, volume) for l in levels]
         bufSize = sum(beepBufSizes) + len(levels) * pauseBufSize
         buf = ctypes.create_string_buffer(bufSize)
         bufPtr = 0
         for l in levels:
             bufPtr += NVDAHelper.generateBeep(
                 ctypes.cast(ctypes.byref(buf, bufPtr), ctypes.POINTER(ctypes.c_char)), 
-                self.getPitch(l), beepLen, 50, 50)
+                self.getPitch(l), beepLen, volume, volume)
             bufPtr += pauseBufSize # add a short pause
         tones.player.stop()
         tones.player.feed(buf.raw)
 
-    def simpleCrackle(self, n):
-        return self.fancyCrackle([0] * n)
+    def simpleCrackle(self, n, volume):
+        return self.fancyCrackle([0] * n, volume)
 
-    __gestures = {
-        "kb:alt+shift+DownArrow": "nextText",
-        "kb:alt+shift+UpArrow": "previousText",
-    }

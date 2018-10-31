@@ -2,6 +2,8 @@
 TextNav allows you to find text that you want to read on a web page in just a single keystroke.
 More precisely, it adds a keystroke to jump to next or previous text paragraphs - that is a paragraph containing one or more sentences. 
 This feature might be useful to quickly find the textual part of a web page or to skip over menus, advertisements and other not important page elements.
+
+TextNav was formerly a part of [SentenceNav](https://github.com/mltony/nvda-sentence-nav/) add-on.
 ## Download
 TBD
 

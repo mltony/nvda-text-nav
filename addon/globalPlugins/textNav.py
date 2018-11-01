@@ -23,11 +23,6 @@ import tones
 import ui
 import wx
 
-f = open("C:\\users\\tony\\dropbox\\work\\1.txt", "w")
-def log(s):
-    print >>f, str(s)
-    f.flush()
-
 def myAssert(condition):
     if not condition:
         raise RuntimeError("Assertion failed")
@@ -44,6 +39,7 @@ def initConfiguration():
         "noNextTextChimeVolume" : "integer( default=50, min=0, max=100)",
         "noNextTextMessage" : "boolean( default=False)",
         "speakFormatted" : "boolean( default=True)",
+        "applicationsBlacklist" : "string( default='audacity,')",
     }
     config.conf.spec["textnav"] = confspec
     
@@ -96,11 +92,17 @@ class SettingsDialog(gui.SettingsDialog):
         label = _("Speak formatted text")
         self.speakFormattedCheckbox = sHelper.addItem(wx.CheckBox(self, label=label))
         self.speakFormattedCheckbox.Value = getConfig("speakFormatted")
+      # applicationsBlacklist edit
+        # Translators: Label for blacklisted applications edit box
+        self.applicationsBlacklistEdit = gui.guiHelper.LabeledControlHelper(self, _("Disable TextNav in applications (comma-separated list)"), wx.TextCtrl).control
+        self.applicationsBlacklistEdit.Value = getConfig("applicationsBlacklist")
+        
     def onOk(self, evt):
         config.conf["textnav"]["crackleVolume"] = self.crackleVolumeSlider.Value
         config.conf["textnav"]["noNextTextChimeVolume"] = self.noNextTextChimeVolumeSlider.Value
         config.conf["textnav"]["noNextTextMessage"] = self.noNextTextMessageCheckbox.Value
         config.conf["textnav"]["speakFormatted"] = self.speakFormattedCheckbox.Value
+        config.conf["textnav"]["applicationsBlacklist"] = self.applicationsBlacklistEdit.Value
         super(SettingsDialog, self).onOk(evt)
 
 
@@ -180,7 +182,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                 textInfo.updateCaret()
                 self.simpleCrackle(distance, getConfig("crackleVolume"))
                 if getConfig("speakFormatted"):
-                    speech.speakTextInfo(textInfo)
+                    speech.speakTextInfo(textInfo, reason=controlTypes.REASON_CARET)
                 else:
                     speech.speakText(text)
                 break

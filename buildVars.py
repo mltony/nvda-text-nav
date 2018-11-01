@@ -19,11 +19,11 @@ addon_info = {
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 	"addon_description" : _("""TextNav allows you to find text that you want to read on a web page in just a single keystroke."""),
 	# version
-	"addon_version" : "0.1dev",
+	"addon_version" : "0.2dev",
 	# Author(s)
 	"addon_author" : u"Tony Malykh <anton.malykh@gmail.com>",
 	# URL for the add-on documentation support
-	"addon_url" : "https://gihub.com/mltony/nvda-text-nav",
+	"addon_url" : "https://github.com/mltony/nvda-text-nav",
 	# Documentation file name
 	"addon_docFileName" : "readme.html",
 }

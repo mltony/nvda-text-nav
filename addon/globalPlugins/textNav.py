@@ -143,16 +143,27 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
     @script(description='Move to next  paragraph containing text.', gestures=['kb:Alt+Shift+DownArrow'])
     def script_nextText(self, gesture):
+        if self.maybePassThrough(gesture):
+            return
         # Translators: error message when no next paragraph with text is available in the document
         errorMsg = _("No next paragraph with text")
         self.moveToText(gesture, 1, errorMsg)
 
     @script(description='Move to previous  paragraph containing text.', gestures=['kb:Alt+Shift+UpArrow'])
     def script_previousText(self, gesture):
+        if self.maybePassThrough(gesture):
+            return
         # Translators: error message when no previous paragraph with text is available in the document
         errorMsg = _("No previous paragraph with text")
         self.moveToText(gesture, -1, errorMsg)
 
+    def maybePassThrough(self, gesture):
+        focus = api.getFocusObject()
+        appName = focus.appModule.appName
+        if unicode(appName.lower()) in getConfig("applicationsBlacklist").lower().strip().split(","):
+            gesture.send()
+            return True
+        return False
 
     def moveToText(self, gesture, increment, errorMsg="Error"):
         focus = api.getFocusObject()
@@ -178,7 +189,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             text2 = text + " FinalWord"
             boundaries = self.splitParagraphIntoSentences(text2)
             if len(boundaries) >= 3:
-                #textInfo.collapse()
                 textInfo.updateCaret()
                 self.simpleCrackle(distance, getConfig("crackleVolume"))
                 if getConfig("speakFormatted"):

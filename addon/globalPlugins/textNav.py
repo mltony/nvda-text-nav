@@ -39,7 +39,7 @@ def initConfiguration():
         "noNextTextChimeVolume" : "integer( default=50, min=0, max=100)",
         "noNextTextMessage" : "boolean( default=False)",
         "speakFormatted" : "boolean( default=True)",
-        "applicationsBlacklist" : "string( default='audacity,')",
+        "applicationsBlacklist" : "string( default='audacity,excel')",
     }
     config.conf.spec["textnav"] = confspec
     

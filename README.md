@@ -5,7 +5,8 @@ This feature might be useful to quickly find the textual part of a web page or t
 
 TextNav was formerly a part of [SentenceNav](https://github.com/mltony/nvda-sentence-nav/) add-on.
 ## Download
-TBD
+Current stable release:
+[TextNav v1.0](https://github.com/mltony/nvda-text-nav/releases/download/v1.0/textnav-1.0.nvda-addon).
 
 ## Keystrokes
 * Alt+Shift+Down: Go to next text paragraph.

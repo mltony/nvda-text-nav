@@ -172,6 +172,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         textInfo = focus.makeTextInfo(textInfos.POSITION_CARET)
         distance = 0
         while True:
+            textInfo.collapse()
             result =textInfo.move(textInfos.UNIT_PARAGRAPH, increment)
             if result == 0:
                 volume = getConfig("noNextTextChimeVolume")
@@ -180,6 +181,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                     ui.message(errorMsg)
                 return
             distance += 1
+            if distance==1000:
+                # Translators: error message if for some reason TextNav enters infinite loop
+                ui.message(_("TextNav error: Infinite loop"))
+                return
             textInfo.expand(textInfos.UNIT_PARAGRAPH)
             text = textInfo.text
             

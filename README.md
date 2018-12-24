@@ -1,6 +1,7 @@
 # nvda-text-nav
 
 TextNav is  a new better way to navigate Internet for the blind. It allows you to quickly find readable content on almost any webpage on the Internet with just a single keystroke. Check out a short audio demo (7 minutes audio file):
+
 https://soundcloud.com/user-977282820/textnav-promo
 
 More precisely, TextNav adds a keystroke to jump to next or previous text paragraphs - that is a paragraph containing one or more sentences, separated by periods. 

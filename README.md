@@ -15,14 +15,8 @@ TextNav was formerly a part of [SentenceNav](https://github.com/mltony/nvda-sent
 ## Source code
 Source code is available at <http://github.com/mltony/nvda-text-nav>.
 
-## Downloads and release history
+## Download
 * Current stable release: [TextNav v1.2](https://github.com/mltony/nvda-text-nav/releases/download/v1.2/textnav-1.2.nvda-addon) 01/22/2019
-  * Fixed infinite loop bug in Outlook.
-  * Updated addon template.
-  * 16 Translations.
-* [v1.0](https://github.com/mltony/nvda-text-nav/releases/download/v1.0/textnav-1.0.nvda-addon) 11/09/2018
-  * Initial release.
-
 
 ## Feedback
 If you have any questions or comments, or if you find this addon useful, please don't hesitate to contact me at anton.malykh *at* gmail.com.

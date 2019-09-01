@@ -16,5 +16,6 @@ TextNav was formerly a part of [SentenceNav](https://github.com/mltony/nvda-sent
 Source code is available at <http://github.com/mltony/nvda-text-nav>.
 
 ## Download
-* Current stable release: [TextNav v1.2](https://github.com/mltony/nvda-text-nav/releases/download/v1.2/textnav-1.2.nvda-addon)
+* Current stable version (Python 3 only, requires NVDA 2019.3 or later): [TextNav](https://github.com/mltony/nvda-text-nav/releases/latest/download/textnav.nvda-addon)
+* Last Python 2 version (compatible with NVDA 2019.2 and prior): [TextNav v1.2](https://github.com/mltony/nvda-text-nav/releases/download/v1.2/textnav-1.2.nvda-addon)
 

@@ -11,7 +11,7 @@ phrases. Cette fonctionnalité peut être utile pour trouver rapidement la
 partie textuelle d’une page Web ou pour ignorer les menus, les publicités et
 d’autres éléments de page non importants.
 
-## Combinaisons des touches à frapper: 
+## Touches de commandes :
 * Alt+Maj+Flèche Bas: Aller au paragraphe de texte suivant.
 * Alt+Maj+Flèche Haut: Aller au paragraphe de texte précédent.
 

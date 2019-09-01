@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: textnav 1.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2018-11-23 20:02+1000\n"
-"PO-Revision-Date: 2018-12-09 11:44+0200\n"
+"PO-Revision-Date: 2019-03-12 16:07+0200\n"
 "Last-Translator: shmuel naaman <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <nvda.israel@gmail.com>\n"
 "Language: he\n"
@@ -17,10 +17,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.10\n"
 
+msgid "TextNav..."
+msgstr "תוסף Text NavTextNav"
+
+#. Translators: Title for the settings dialog
+msgid "TextNav settings"
+msgstr "הגדרות התוסף TextNavTextNav"
+
+#. Translators: volume of crackling slider
+msgid "Crackling volume"
+msgstr "עוצמת הצליל של סרגל ההתקדמות"
+
+#. Translators: End of document chime volume
+msgid "Volume of chime when no more sentences available"
+msgstr "עוצמת הצליל המודיע שאין עוד פיסקאות"
+
+#. Checkboxes
+#. Translators: Checkbox that controls spoken message when no next or previous text paragraph is available in the document
+msgid ""
+"Speak message when no next paragraph containing text available in the "
+"document"
+msgstr "הכרז על העדר פיסקאות קודמות או פיסקאות נוספות במסמך"
+
+#. Translators: speak formatted text checkbox
+msgid "Speak formatted text"
+msgstr "הקראת טקסט עם מאפייניו"
+
+#. applicationsBlacklist edit
+#. Translators: Label for blacklisted applications edit box
+msgid "Disable TextNav in applications (comma-separated list)"
+msgstr "השבת את התוסף ביישומים (comma-separated list)"
+
 #. Add-on summary, usually the user visible name of the addon.
 #. Translators: Summary for this add-on to be shown on installation and add-on information.
 msgid "TextNav"
 msgstr "TextNav"
+
+#. Translators: error message when no next paragraph with text is available in the document
+msgid "No next paragraph with text"
+msgstr "אין פיסקה קודמת עם טקסט"
+
+#. Translators: error message when no previous paragraph with text is available in the document
+msgid "No previous paragraph with text"
+msgstr "אין פיסקה קודמת "
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager

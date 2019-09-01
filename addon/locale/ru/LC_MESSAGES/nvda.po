@@ -1,65 +1,32 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the textnav package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 'TextNav' '1.0'\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-25 03:31+0200\n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: Alex Yeshanu <eshanuap@gmail.com>\n"
+"Project-Id-Version: textnav 1.0\n"
+"Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
+"POT-Creation-Date: 2018-11-23 20:02+1000\n"
+"PO-Revision-Date: 2019-02-02 15:24+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
-"X-Poedit-Basepath: ../../../globalPlugins\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Generator: Poedit 1.6.10\n"
 
-#: textNav.py:33
-msgid "TextNav..."
-msgstr "TextNav..."
-
-#: textNav.py:57
-msgid "TextNav settings"
-msgstr "Настройки TextNav"
-
-#: textNav.py:67
-msgid "Crackling volume"
-msgstr "Громкость треска"
-
-#: textNav.py:78
-msgid "Volume of chime when no more sentences available"
-msgstr "Громкость сигнала, когда больше нет предложений"
-
-#: textNav.py:88
-msgid ""
-"Speak message when no next paragraph containing text available in the "
-"document"
-msgstr ""
-"Произносить сообщение, когда в документе не содержится следующего "
-"текстового абзаца"
-
-#: textNav.py:92
-msgid "Speak formatted text"
-msgstr "Произносить форматированный текст"
-
-#: textNav.py:97
-msgid "Disable TextNav in applications (comma-separated list)"
-msgstr "Отключить TextNav в приложениях (список, разделенный запятыми)"
-
-#: textNav.py:111
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on to be shown on installation and add-on information.
 msgid "TextNav"
 msgstr "TextNav"
 
-#: textNav.py:149
-msgid "No next paragraph with text"
-msgstr "Нет следующего текстового абзаца"
-
-#: textNav.py:157
-msgid "No previous paragraph with text"
-msgstr "Нет предыдущего текстового абзаца"
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid ""
+"TextNav allows you to find text that you want to read on a web page in just "
+"a single keystroke."
+msgstr ""
+"TextNav даёт вам возможность найти определённый вами текст с помощью толмко "
+"одного сочетания клавиш."

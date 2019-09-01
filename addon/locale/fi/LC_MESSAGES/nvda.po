@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: TextNav\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2018-11-23 20:02+1000\n"
-"PO-Revision-Date: 2018-11-30 13:43+0200\n"
-"Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
+"PO-Revision-Date: 2019-02-23 07:24+0200\n"
+"Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,10 +18,49 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.11\n"
 
+msgid "TextNav..."
+msgstr "TextNav..."
+
+#. Translators: Title for the settings dialog
+msgid "TextNav settings"
+msgstr "TextNavin asetukset"
+
+#. Translators: volume of crackling slider
+msgid "Crackling volume"
+msgstr "Äänimerkin voimakkuus"
+
+#. Translators: End of document chime volume
+msgid "Volume of chime when no more sentences available"
+msgstr "Äänimerkin voimakkuus, kun lauseita ei ole enempää"
+
+#. Checkboxes
+#. Translators: Checkbox that controls spoken message when no next or previous text paragraph is available in the document
+msgid ""
+"Speak message when no next paragraph containing text available in the "
+"document"
+msgstr "Puhu ilmoitus, kun asiakirjassa ei ole enempää tekstikappaleita"
+
+#. Translators: speak formatted text checkbox
+msgid "Speak formatted text"
+msgstr "Puhu muotoiltu teksti"
+
+#. applicationsBlacklist edit
+#. Translators: Label for blacklisted applications edit box
+msgid "Disable TextNav in applications (comma-separated list)"
+msgstr "Poista TextNav käytöstä sovelluksissa (pilkulla eroteltu luettelo)"
+
 #. Add-on summary, usually the user visible name of the addon.
 #. Translators: Summary for this add-on to be shown on installation and add-on information.
 msgid "TextNav"
 msgstr "TextNav"
+
+#. Translators: error message when no next paragraph with text is available in the document
+msgid "No next paragraph with text"
+msgstr "Ei enempää tekstikappaleita"
+
+#. Translators: error message when no previous paragraph with text is available in the document
+msgid "No previous paragraph with text"
+msgstr "Ei enempää edellisiä tekstikappaleita"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager

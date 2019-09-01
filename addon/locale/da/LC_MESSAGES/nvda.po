@@ -8,19 +8,60 @@ msgstr ""
 "Project-Id-Version: textnav 1.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2018-11-23 20:02+1000\n"
-"PO-Revision-Date: 2019-01-14 12:31+0100\n"
+"PO-Revision-Date: 2019-02-23 11:24+0100\n"
+"Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
+"Language-Team: Dansk NVDA <dansk@nvda.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
-"Language-Team: Dansk NVDA <dansk@nvda.dk>\n"
 "X-Generator: Poedit 2.2\n"
+"X-Poedit-Bookmarks: -1,2,-1,-1,-1,-1,-1,-1,-1,-1\n"
+
+msgid "TextNav..."
+msgstr "Tekstnavigation..."
+
+#. Translators: Title for the settings dialog
+msgid "TextNav settings"
+msgstr "Indstillinger for Teksttnavigation"
+
+#. Translators: volume of crackling slider
+msgid "Crackling volume"
+msgstr "Skrattende lydstyrke"
+
+#. Translators: End of document chime volume
+msgid "Volume of chime when no more sentences available"
+msgstr "Lydstyrke på tone når der ikke er mere af sætningen tilgængelig"
+
+#. Checkboxes
+#. Translators: Checkbox that controls spoken message when no next or previous text paragraph is available in the document
+msgid ""
+"Speak message when no next paragraph containing text available in the "
+"document"
+msgstr ""
+"Sig besked, når der ikke er yderligere afsnit tilgængelige i dokumentet"
+
+#. Translators: speak formatted text checkbox
+msgid "Speak formatted text"
+msgstr "Sig formateret tekst"
+
+#. applicationsBlacklist edit
+#. Translators: Label for blacklisted applications edit box
+msgid "Disable TextNav in applications (comma-separated list)"
+msgstr "Deaktiver Tekstnavigation i applikationer (kommasepareret liste)"
 
 #. Add-on summary, usually the user visible name of the addon.
 #. Translators: Summary for this add-on to be shown on installation and add-on information.
 msgid "TextNav"
-msgstr "TextNav"
+msgstr "Teksttnavigation"
+
+#. Translators: error message when no next paragraph with text is available in the document
+msgid "No next paragraph with text"
+msgstr "Ingen næste tekstafsnit"
+
+#. Translators: error message when no previous paragraph with text is available in the document
+msgid "No previous paragraph with text"
+msgstr "Intet forrige tekstafsnit"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
@@ -28,5 +69,5 @@ msgid ""
 "TextNav allows you to find text that you want to read on a web page in just "
 "a single keystroke."
 msgstr ""
-"TextNav giver dig mulighed for at finde tekst, som du vil læse på en "
+"Tekstnavigation giver dig mulighed for at finde tekst, som du vil læse på en "
 "webside ved blot et enkelt tastetryk."

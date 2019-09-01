@@ -160,7 +160,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     def maybePassThrough(self, gesture):
         focus = api.getFocusObject()
         appName = focus.appModule.appName
-        if unicode(appName.lower()) in getConfig("applicationsBlacklist").lower().strip().split(","):
+        if appName.lower() in getConfig("applicationsBlacklist").lower().strip().split(","):
             gesture.send()
             return True
         return False
@@ -228,7 +228,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             bufSize -= (bufSize % intSize)
         tones.player.stop()
         bbs = []
-        result = [0] * (bufSize/intSize)
+        result = [0] * (bufSize//intSize)
         for freq in freqs:
             buf = ctypes.create_string_buffer(bufSize)
             NVDAHelper.generateBeep(buf, freq, beepLen, right, left)

@@ -246,7 +246,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             return a
         # Here assume n > m
         result = []
-        for i in xrange(0, m*n, n):
+        for i in range(0, m*n, n):
             result.append(a[i  / m])
         return result
     

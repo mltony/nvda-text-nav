@@ -27,6 +27,11 @@ def myAssert(condition):
     if not condition:
         raise RuntimeError("Assertion failed")
 
+try:
+    REASON_CARET = controlTypes.REASON_CARET
+except AttributeError:
+    REASON_CARET = controlTypes.OutputReason.CARET
+
 def createMenu():
     def _popupMenu(evt):
         gui.mainFrame._popupSettingsDialog(SettingsDialog)
@@ -197,7 +202,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                 textInfo.updateCaret()
                 self.simpleCrackle(distance, getConfig("crackleVolume"))
                 if getConfig("speakFormatted"):
-                    speech.speakTextInfo(textInfo, reason=controlTypes.REASON_CARET)
+                    speech.speakTextInfo(textInfo, reason=REASON_CARET)
                 else:
                     speech.speakText(text)
                 break

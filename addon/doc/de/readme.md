@@ -11,7 +11,7 @@ Sätze enthält.  Diese Funktion kann nützlich sein, um den relevanten
 Textblock auf einer Webseite schnell zu finden oder um Menüs, Anzeigen und
 andere unwichtige Seitenelemente zu überspringen.
 
-## Tastenkombinationen:
+## Tastenkombinationen: 
 * Alt+Umschalt+Pfeiltaste nach unten: Springt zum nächsten Textabsatz.
 * Alt+Umschalt+Pfeiltaste nach oben: Springt zum vorherigen Textabsatz.
 

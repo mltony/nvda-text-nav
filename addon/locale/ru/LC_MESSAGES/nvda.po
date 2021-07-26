@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: textnav 1.0\n"
-"Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2018-11-23 20:02+1000\n"
-"PO-Revision-Date: 2019-02-02 15:24+0100\n"
+"PO-Revision-Date: 2020-02-24 11:26+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ru\n"
@@ -17,10 +17,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.10\n"
 
+msgid "TextNav..."
+msgstr "TextNav..."
+
+#. Translators: Title for the settings dialog
+msgid "TextNav settings"
+msgstr "Настройки TextNav"
+
+#. Translators: volume of crackling slider
+msgid "Crackling volume"
+msgstr "Громкость шума"
+
+#. Translators: End of document chime volume
+msgid "Volume of chime when no more sentences available"
+msgstr "Громкость звука, когда нет доступных предложений"
+
+#. Checkboxes
+#. Translators: Checkbox that controls spoken message when no next or previous text paragraph is available in the document
+msgid ""
+"Speak message when no next paragraph containing text available in the "
+"document"
+msgstr "Читать сообщение, когда нет следующего или предыдущего абзаца"
+
+#. Translators: speak formatted text checkbox
+msgid "Speak formatted text"
+msgstr "Читать форматированный текст"
+
+#. applicationsBlacklist edit
+#. Translators: Label for blacklisted applications edit box
+msgid "Disable TextNav in applications (comma-separated list)"
+msgstr "Выключать TextNav в приложениях (список разделён запятыми)"
+
 #. Add-on summary, usually the user visible name of the addon.
 #. Translators: Summary for this add-on to be shown on installation and add-on information.
 msgid "TextNav"
 msgstr "TextNav"
+
+#. Translators: error message when no next paragraph with text is available in the document
+msgid "No next paragraph with text"
+msgstr "Нет следующего параграфа с текстом"
+
+#. Translators: error message when no previous paragraph with text is available in the document
+msgid "No previous paragraph with text"
+msgstr "Нет предыдущего абзаца с текстом"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
@@ -28,5 +67,5 @@ msgid ""
 "TextNav allows you to find text that you want to read on a web page in just "
 "a single keystroke."
 msgstr ""
-"TextNav даёт вам возможность найти определённый вами текст с помощью толмко "
+"TextNav даёт вам возможность найти определённый вами текст с помощью только "
 "одного сочетания клавиш."

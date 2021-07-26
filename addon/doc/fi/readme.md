@@ -3,7 +3,7 @@
 * Tekijä: Tony Malykh
 * Lataa [vakaa versio][1]
 
-TextNavin avulla voidaan etsiä tekstiä verkkosivuilta luettavaksi yhdellä
+TextNavin avulla voit etsiä tekstiä verkkosivuilta luettavaksi yhdellä
 näppäinkomennolla. Tämä tehdään komennoilla, jotka siirtävät seuraavaan tai
 edelliseen tekstikappaleeseen - ts. kappaleeseen, jossa on yksi tai useampi
 lause. Tästä ominaisuudesta voi olla hyötyä, mikäli halutaan löytää nopeasti

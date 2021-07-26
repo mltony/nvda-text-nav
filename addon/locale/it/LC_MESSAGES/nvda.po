@@ -6,31 +6,31 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: textnav 1.0\n"
-"Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2018-11-23 20:02+1000\n"
-"PO-Revision-Date: 2019-06-12 15:26+0200\n"
+"PO-Revision-Date: 2020-05-08 17:16+0200\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: \n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.3\n"
 
 msgid "TextNav..."
 msgstr "TextNav...TextNav"
 
 #. Translators: Title for the settings dialog
 msgid "TextNav settings"
-msgstr "Impostazioni TextNav"
+msgstr "Impostazioni di TextNav"
 
 #. Translators: volume of crackling slider
 msgid "Crackling volume"
-msgstr ""
+msgstr "Volume del crepitio"
 
 #. Translators: End of document chime volume
 msgid "Volume of chime when no more sentences available"
-msgstr "Volume della suoneria quando non ci sono più frasi disponibili"
+msgstr "Volume del suono quando non ci sono più frasi disponibili"
 
 #. Checkboxes
 #. Translators: Checkbox that controls spoken message when no next or previous text paragraph is available in the document
@@ -38,8 +38,8 @@ msgid ""
 "Speak message when no next paragraph containing text available in the "
 "document"
 msgstr ""
-"Leggi un messaggio quando nessun paragrafo successivo contiene testo "
-"disponibile nel documento"
+"Leggi un messaggio quando non ci sono altri paragrafi contenenti testo nel "
+"documento"
 
 #. Translators: speak formatted text checkbox
 msgid "Speak formatted text"
@@ -69,5 +69,5 @@ msgid ""
 "TextNav allows you to find text that you want to read on a web page in just "
 "a single keystroke."
 msgstr ""
-"TextNav è un componente aggiuntivo che consente di trovare il testo da "
-"leggere nelle pagine web servendosi di una sola combinazione di tasti."
+"TextNav consente di trovare il testo da leggere nelle pagine web servendosi "
+"di una sola combinazione di tasti."

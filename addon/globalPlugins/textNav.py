@@ -27,6 +27,11 @@ def myAssert(condition):
     if not condition:
         raise RuntimeError("Assertion failed")
 
+try:
+    REASON_CARET = controlTypes.REASON_CARET
+except AttributeError:
+    REASON_CARET = controlTypes.OutputReason.CARET
+
 def createMenu():
     def _popupMenu(evt):
         gui.mainFrame._popupSettingsDialog(SettingsDialog)
@@ -160,7 +165,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     def maybePassThrough(self, gesture):
         focus = api.getFocusObject()
         appName = focus.appModule.appName
-        if unicode(appName.lower()) in getConfig("applicationsBlacklist").lower().strip().split(","):
+        if appName.lower() in getConfig("applicationsBlacklist").lower().strip().split(","):
             gesture.send()
             return True
         return False
@@ -172,6 +177,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         textInfo = focus.makeTextInfo(textInfos.POSITION_CARET)
         distance = 0
         while True:
+            textInfo.collapse()
             result =textInfo.move(textInfos.UNIT_PARAGRAPH, increment)
             if result == 0:
                 volume = getConfig("noNextTextChimeVolume")
@@ -180,6 +186,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                     ui.message(errorMsg)
                 return
             distance += 1
+            if distance==1000:
+                # Translators: error message if for some reason TextNav enters infinite loop
+                ui.message(_("TextNav error: Infinite loop"))
+                return
             textInfo.expand(textInfos.UNIT_PARAGRAPH)
             text = textInfo.text
             
@@ -192,7 +202,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                 textInfo.updateCaret()
                 self.simpleCrackle(distance, getConfig("crackleVolume"))
                 if getConfig("speakFormatted"):
-                    speech.speakTextInfo(textInfo, reason=controlTypes.REASON_CARET)
+                    speech.speakTextInfo(textInfo, reason=REASON_CARET)
                 else:
                     speech.speakText(text)
                 break
@@ -223,16 +233,16 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             bufSize -= (bufSize % intSize)
         tones.player.stop()
         bbs = []
-        result = [0] * (bufSize/intSize)
+        result = [0] * (bufSize//intSize)
         for freq in freqs:
             buf = ctypes.create_string_buffer(bufSize)
             NVDAHelper.generateBeep(buf, freq, beepLen, right, left)
             bytes = bytearray(buf)
-            unpacked = struct.unpack("<%dQ" % (bufSize / intSize), bytes)
+            unpacked = struct.unpack("<%dQ" % (bufSize // intSize), bytes)
             result = map(operator.add, result, unpacked)
         maxInt = 1 << (8 * intSize)
         result = map(lambda x : x %maxInt, result)
-        packed = struct.pack("<%dQ" % (bufSize / intSize), *result)
+        packed = struct.pack("<%dQ" % (bufSize // intSize), *result)
         tones.player.feed(packed)
 
     def uniformSample(self, a, m):
@@ -241,8 +251,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             return a
         # Here assume n > m
         result = []
-        for i in xrange(0, m*n, n):
-            result.append(a[i  / m])
+        for i in range(0, m*n, n):
+            result.append(a[i  // m])
         return result
     
     BASE_FREQ = speech.IDT_BASE_FREQUENCY
@@ -252,7 +262,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     BEEP_LEN = 10 # millis
     PAUSE_LEN = 5 # millis
     MAX_CRACKLE_LEN = 400 # millis
-    MAX_BEEP_COUNT = MAX_CRACKLE_LEN / (BEEP_LEN + PAUSE_LEN)
+    MAX_BEEP_COUNT = MAX_CRACKLE_LEN // (BEEP_LEN + PAUSE_LEN)
         
     def fancyCrackle(self, levels, volume):
         levels = self.uniformSample(levels, self.MAX_BEEP_COUNT )

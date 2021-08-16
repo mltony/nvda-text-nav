@@ -1,4 +1,4 @@
-		# -*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 # Build customizations
 # Change this file instead of sconstruct or manifest files, whenever possible.
@@ -19,13 +19,19 @@ addon_info = {
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 	"addon_description" : _("""TextNav allows you to find text that you want to read on a web page in just a single keystroke."""),
 	# version
-	"addon_version" : "1.1dev",
+	"addon_version" : "1.5",
 	# Author(s)
 	"addon_author" : u"Tony Malykh <anton.malykh@gmail.com>",
 	# URL for the add-on documentation support
 	"addon_url" : "https://github.com/mltony/nvda-text-nav",
 	# Documentation file name
 	"addon_docFileName" : "readme.html",
+	# Minimum NVDA version supported (e.g. "2018.3")
+	"addon_minimumNVDAVersion" : "2019.2.0",
+	# Last NVDA version supported/tested (e.g. "2018.4", ideally more recent than minimum version)
+	"addon_lastTestedNVDAVersion" : "2021.1.0",
+	# Add-on update channel (default is stable or None)
+	"addon_updateChannel" : None,
 }
 
 
@@ -33,7 +39,7 @@ import os.path
 
 # Define the python files that are the sources of your add-on.
 # You can use glob expressions here, they will be expanded.
-pythonSources = [os.path.join("addon", "GlobalPlugins", "*.py"), ]
+pythonSources = []
 
 # Files that contain strings for translation. Usually your python sources
 i18nSources = pythonSources + ["buildVars.py"]

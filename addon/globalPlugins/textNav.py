@@ -11,10 +11,11 @@ import controlTypes
 import ctypes
 import globalPluginHandler
 import gui
+from gui.settingsDialogs import SettingsPanel
 import NVDAHelper
 from NVDAObjects.window import winword
 import operator
-import re 
+import re
 from scriptHandler import script
 import speech
 import struct
@@ -32,12 +33,6 @@ try:
 except AttributeError:
     REASON_CARET = controlTypes.OutputReason.CARET
 
-def createMenu():
-    def _popupMenu(evt):
-        gui.mainFrame._popupSettingsDialog(SettingsDialog)
-    prefsMenuItem  = gui.mainFrame.sysTrayIcon.preferencesMenu.Append(wx.ID_ANY, _("TextNav..."))
-    gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, _popupMenu, prefsMenuItem)
-
 def initConfiguration():
     confspec = {
         "crackleVolume" : "integer( default=25, min=0, max=100)",
@@ -47,22 +42,17 @@ def initConfiguration():
         "applicationsBlacklist" : "string( default='audacity,excel')",
     }
     config.conf.spec["textnav"] = confspec
-    
+
 def getConfig(key):
     value = config.conf["textnav"][key]
     return value
-    
+
 addonHandler.initTranslation()
 initConfiguration()
-createMenu()
 
-
-class SettingsDialog(gui.SettingsDialog):
+class SettingsDialog(SettingsPanel):
     # Translators: Title for the settings dialog
     title = _("TextNav settings")
-
-    def __init__(self, *args, **kwargs):
-        super(SettingsDialog, self).__init__(*args, **kwargs)
 
     def makeSettings(self, settingsSizer):
         sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -87,7 +77,7 @@ class SettingsDialog(gui.SettingsDialog):
         sizer.Add(slider)
         settingsSizer.Add(sizer)
         self.noNextTextChimeVolumeSlider = slider
-        
+
       # Checkboxes
         # Translators: Checkbox that controls spoken message when no next or previous text paragraph is available in the document
         label = _("Speak message when no next paragraph containing text available in the document")
@@ -101,35 +91,44 @@ class SettingsDialog(gui.SettingsDialog):
         # Translators: Label for blacklisted applications edit box
         self.applicationsBlacklistEdit = gui.guiHelper.LabeledControlHelper(self, _("Disable TextNav in applications (comma-separated list)"), wx.TextCtrl).control
         self.applicationsBlacklistEdit.Value = getConfig("applicationsBlacklist")
-        
-    def onOk(self, evt):
+
+    def onSave(self):
         config.conf["textnav"]["crackleVolume"] = self.crackleVolumeSlider.Value
         config.conf["textnav"]["noNextTextChimeVolume"] = self.noNextTextChimeVolumeSlider.Value
         config.conf["textnav"]["noNextTextMessage"] = self.noNextTextMessageCheckbox.Value
         config.conf["textnav"]["speakFormatted"] = self.speakFormattedCheckbox.Value
         config.conf["textnav"]["applicationsBlacklist"] = self.applicationsBlacklistEdit.Value
-        super(SettingsDialog, self).onOk(evt)
 
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     scriptCategory = _("TextNav")
-    
+
+    def __init__(self, *args, **kwargs):
+        super(GlobalPlugin, self).__init__(*args, **kwargs)
+        self.createMenu()
+
+    def createMenu(self):
+        gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(SettingsDialog)
+
+    def terminate(self):
+        gui.settingsDialogs.NVDASettingsDialog.categoryClasses.remove(SettingsDialog)
+
     def re_grp(s):
         """Wraps a string with a non-capturing group for use in regular expressions."""
-        return "(?:%s)" % s        
-    
+        return "(?:%s)" % s
+
     SENTENCE_BREAKERS = ".?!"
     CHINESE_SENTENCE_BREAKERS = ("["
         + u"\u3002" # Chinese full stop
         + u"\uFF01" # Chinese exclamation mark
         + u"\uFF1F" # Chinese question mark
-        + "]+") 
+        + "]+")
 
     SKIPPABLE_PUNCTUATION = (
         u'")'
         + u"\u201D" # Right double quotation mark
-        )  
+        )
     WIKIPEDIA_REFERENCE = re_grp("\\[[\\w\\s]+\\]")
     SENTENCE_END_REGEX = u"[{br}]+[{skip}]*{wiki}*\\s+".format(
         br=SENTENCE_BREAKERS ,
@@ -137,7 +136,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         skip = SKIPPABLE_PUNCTUATION)
     SENTENCE_END_REGEX = re_grp("^|" + SENTENCE_END_REGEX + "|" + CHINESE_SENTENCE_BREAKERS + "|\\s*$")
     SENTENCE_END_REGEX  = re.compile(SENTENCE_END_REGEX , re.UNICODE)
-    
+
     def splitParagraphIntoSentences(self, text, regex=None):
         if regex is None:
             regex = self.SENTENCE_END_REGEX
@@ -192,7 +191,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                 return
             textInfo.expand(textInfos.UNIT_PARAGRAPH)
             text = textInfo.text
-            
+
             # Small hack: our regex always matches the end of the string, since any sentence must end at the end of the paragraph.
             # In this case, however, we need to figure out if the sentence really ends with a full stop or other sentence breaker at the end.
             # So we add a random word in the end of the string and see if there is any other sentence boundaries besides the beginning and the end of the string.
@@ -209,22 +208,22 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
     NOTES = "A,B,H,C,C#,D,D#,E,F,F#,G,G#".split(",")
     NOTE_RE = re.compile("[A-H][#]?")
-    BASE_FREQ = 220 
+    BASE_FREQ = 220
     def getChordFrequencies(self, chord):
         myAssert(len(self.NOTES) == 12)
         prev = -1
         result = []
         for m in self.NOTE_RE.finditer(chord):
             s = m.group()
-            i =self.NOTES.index(s) 
+            i =self.NOTES.index(s)
             while i < prev:
                 i += 12
             result.append(int(self.BASE_FREQ * (2 ** (i / 12.0))))
             prev = i
-        return result            
-    
+        return result
+
     def fancyBeep(self, chord, length, left=10, right=10):
-        beepLen = length 
+        beepLen = length
         freqs = self.getChordFrequencies(chord)
         intSize = 8 # bytes
         bufSize = max([NVDAHelper.generateBeep(None,freq, beepLen, right, left) for freq in freqs])
@@ -254,7 +253,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         for i in range(0, m*n, n):
             result.append(a[i  // m])
         return result
-    
+
     BASE_FREQ = speech.IDT_BASE_FREQUENCY
     def getPitch(self, indent):
         return self.BASE_FREQ*2**(indent/24.0) #24 quarter tones per octave.
@@ -263,10 +262,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     PAUSE_LEN = 5 # millis
     MAX_CRACKLE_LEN = 400 # millis
     MAX_BEEP_COUNT = MAX_CRACKLE_LEN // (BEEP_LEN + PAUSE_LEN)
-        
+
     def fancyCrackle(self, levels, volume):
         levels = self.uniformSample(levels, self.MAX_BEEP_COUNT )
-        beepLen = self.BEEP_LEN 
+        beepLen = self.BEEP_LEN
         pauseLen = self.PAUSE_LEN
         pauseBufSize = NVDAHelper.generateBeep(None,self.BASE_FREQ,pauseLen,0, 0)
         beepBufSizes = [NVDAHelper.generateBeep(None,self.getPitch(l), beepLen, volume, volume) for l in levels]
@@ -275,7 +274,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         bufPtr = 0
         for l in levels:
             bufPtr += NVDAHelper.generateBeep(
-                ctypes.cast(ctypes.byref(buf, bufPtr), ctypes.POINTER(ctypes.c_char)), 
+                ctypes.cast(ctypes.byref(buf, bufPtr), ctypes.POINTER(ctypes.c_char)),
                 self.getPitch(l), beepLen, volume, volume)
             bufPtr += pauseBufSize # add a short pause
         tones.player.stop()

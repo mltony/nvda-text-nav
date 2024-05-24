@@ -1,3 +1,7 @@
+# Notice
+
+TextNav add-on has been discontinued. TextNav functionality has been merged into NVDA core starting with version 2024.2. It is implemented as a quick navigation gesture and is  assigned by default to `p` and `shift+p`.
+
 # nvda-text-nav
 
 TextNav is  a new better way to navigate Internet for the blind. It allows you to quickly find readable content on almost any webpage on the Internet with just a single keystroke. Check out a short audio demo (7 minutes audio file):
